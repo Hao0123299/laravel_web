@@ -31,9 +31,9 @@
                         <tr>
                             <td>
                                 @if($c->comment_status == 1)
-                                    <input type="button" data-comment_id="{{$c->comment_id}}" id="{{$c->comment_product_id}}" class="btn btn-primary btn-comment-status"  data-comment_status="0" value="Duyệt">
+                                    <input type="button" data-comment_id="{{$c->comment_id}}" id="{{$c->comment_product_id}}" class="btn btn-primary btn-comment-status"  data-comment_status="0" value="Hiển thị">
                                 @else
-                                    <input type="button" data-comment_id="{{$c->comment_id}}" id="{{$c->comment_product_id}}" class="btn btn-danger btn-primary btn-comment-status" data-comment_status="1" value="Bỏ">
+                                    <input type="button" data-comment_id="{{$c->comment_id}}" id="{{$c->comment_product_id}}" class="btn btn-danger btn-primary btn-comment-status" data-comment_status="1" value="Không hiển thị">
                                 @endif
                             </td>
 
@@ -65,7 +65,7 @@
                             <td><a href="{{url('/chi-tiet/'.$c->product->product_slug)}}" target="_blank">{{ $c->product->product_name }}</a> </td> {{--target blank mở tab mới--}}
                             <td>{{ $c->comment_date }}</td>
                             <td>
-                                <a onclick="return confirm('Bạn có chắc là muốn xóa đánh giá này không?')" href="" class="active styling-edit" ui-toggle-class="">
+                                <a onclick="return confirm('Bạn có chắc là muốn xóa đánh giá này không?')" href="{{URL::to('/delete-comment/'.$c->comment_id)}}" class="active styling-edit" ui-toggle-class="">
                                     <i class="fa fa-times text-danger text"></i>
                                 </a>
                             </td>

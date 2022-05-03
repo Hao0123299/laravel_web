@@ -37,25 +37,25 @@
                                                data-validation-length="min1"
                                                data-validation-error-msg="Vui lòng điền tên danh mục"
                                                class=" shipping_email form-control"
-                                               placeholder="Có thể nhập hoặc không">
+                                               placeholder="user@gmail.com">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Họ và tên người nhận hàng</label>
+                                        <label for="exampleInputEmail1">Họ và tên người nhận hàng(*)</label>
                                         <input type="text" name="shipping_name" class="form-control shipping_name"
-                                               placeholder="Không được đẻ trống ô này">
+                                               placeholder="Nguyễn Văn A">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Địa chỉ nhận hàng</label>
+                                        <label for="exampleInputPassword1">Địa chỉ nhận hàng(*)</label>
                                         <input type="text" name="shipping_address" class="form-control shipping_address"
-                                               placeholder="Không được đẻ trống ô này">
+                                               placeholder="Số nhà, Khu phố, Tỉnh, Thành Phố">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Số điên thoại người nhận</label>
+                                        <label for="exampleInputPassword1">Số điên thoại người nhận(*)</label>
                                         <input type="text" name="shipping_phone" class="form-control shipping_phone"
-                                               placeholder="Không được đẻ trống ô này">
+                                               placeholder="">
                                     </div>
 
                                     <div class="form-group">
@@ -65,19 +65,19 @@
                                                   data-validation-error-msg="Vui lòng điền từ khóa danh mục"
                                                   class="form-control shipping_notes" name="shipping_notes"
                                                   id="exampleInputPassword1"
-                                                  placeholder="Có thể nhập hoặc không"></textarea>
+                                                  placeholder=""></textarea>
                                     </div>
-                                    {{--<input type="text"  name="shipping_email" class="shipping_email form-control" placeholder="Điền email">
-                                    <input type="text"  name="shipping_name" class="shipping_name" placeholder="Họ và tên người nhận">
-                                    <input type="text" name="shipping_address" class="shipping_address" placeholder="Địa chỉ nhận hàng">
-                                    <input type="text" name="shipping_phone" class="shipping_phone" placeholder="Số điện thoại người nhận">
-                                    <textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>--}}
+{{--                                    <input type="text"  name="shipping_email" class="shipping_email form-control" placeholder="Điền email">--}}
+{{--                                    <input type="text"  name="shipping_name" class="shipping_name" placeholder="Họ và tên người nhận">--}}
+{{--                                    <input type="text" name="shipping_address" class="shipping_address" placeholder="Địa chỉ nhận hàng">--}}
+{{--                                    <input type="text" name="shipping_phone" class="shipping_phone" placeholder="Số điện thoại người nhận">--}}
+{{--                                    <textarea name="shipping_notes" class="shipping_notes" placeholder="Ghi chú đơn hàng của bạn" rows="5"></textarea>--}}
 
                                     @if(Session::get('fee'))
                                         <input type="hidden" name="order_fee" class="order_fee"
                                                value="{{Session::get('fee')}}">
                                     @else
-                                        <input type="hidden" name="order_fee" class="order_fee" value="10000">
+                                        <input type="hidden" name="order_fee" class="order_fee" value="0">
                                     @endif
 
                                     @if(Session::get('coupon'))
@@ -94,15 +94,15 @@
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Chọn hình thức thanh toán</label>
                                             @if(!Session::get('paypal_succcess')==true)
-                                            <select name="payment_select"
-                                                    class="form-control input-sm m-bot15 payment_select">
-                                                <option value="0">Qua chuyển khoản</option>
-                                                <option value="1">Tiền mặt</option>
-                                            </select>
+                                                <select name="payment_select"
+                                                        class="form-control input-sm m-bot15 payment_select">
+                                                    <option value="0">Qua chuyển khoản</option>
+                                                    <option value="1">Tiền mặt</option>
+                                                </select>
                                             @else
                                                 <select name="payment_select"
                                                         class="form-control input-sm m-bot15 payment_select">
-                                                    <option value="2">Đã thanh toán online Paypal </option>
+                                                    <option value="2">Đã thanh toán online Paypal</option>
                                                 </select>
                                             @endif
 
@@ -249,41 +249,35 @@
 
 
                                             <td colspan="2">
-                                                <li>Tổng tiền :<span>{{number_format($total,0,',','.')}}đ</span></li>
                                                 @if(Session::get('coupon'))
-                                                    <li>
-
-                                                        @foreach(Session::get('coupon') as $key => $cou)
-                                                            @if($cou['coupon_condition']==1)
-                                                                Mã giảm : {{$cou['coupon_number']}} %
-                                                                <p>
-                                                                    @php
-                                                                        $total_coupon = ($total*$cou['coupon_number'])/100;
-
-                                                                    @endphp
-                                                                </p>
-                                                                <p>
-                                                                    @php
-                                                                        $total_after_coupon = $total-$total_coupon;
-                                                                    @endphp
-                                                                </p>
-                                                            @elseif($cou['coupon_condition']==2)
-                                                                Mã giảm
-                                                                : {{number_format($cou['coupon_number'],0,',','.')}} VNĐ
-                                                                <p>
-                                                                    @php
-                                                                        $total_coupon = $total - $cou['coupon_number'];
-
-                                                                    @endphp
-                                                                </p>
+                                                    {{--  <li>--}}
+                                                    @foreach(Session::get('coupon') as $key => $cou)
+                                                        @if($cou['coupon_condition']==1)
+                                                            {{--Mã giảm : {{$cou['coupon_number']}} %--}}
+                                                            <p>
                                                                 @php
-                                                                    $total_after_coupon = $total_coupon;
+                                                                    $total_coupon = ($total*$cou['coupon_number'])/100;
+
                                                                 @endphp
-                                                            @endif
-                                                        @endforeach
-
-
-                                                    </li>
+                                                            </p>
+                                                            <p>
+                                                                @php
+                                                                    $total_after_coupon = $total-$total_coupon;
+                                                                @endphp
+                                                            </p>
+                                                        @elseif($cou['coupon_condition']==2)
+                                                           {{-- Mã giảm
+                                                            : {{number_format($cou['coupon_number'],0,',','.')}} VNĐ--}}
+                                                            <p>
+                                                                @php
+                                                                    $total_coupon = $total - $cou['coupon_number'];
+                                                                @endphp
+                                                            </p>
+                                                            @php
+                                                                $total_after_coupon = $total_coupon;
+                                                            @endphp
+                                                        @endif
+                                                    @endforeach
                                                 @endif
 
                                                 @if(Session::get('fee'))
@@ -295,37 +289,94 @@
                                                     </li>
                                                     <?php $total_after_fee = $total + Session::get('fee'); ?>
                                                 @endif
-                                                <li>Tổng còn:
-                                                    @php
-                                                        if(Session::get('fee') && !Session::get('coupon')){
-                                                            $total_after = $total_after_fee;
-                                                            echo number_format($total_after,0,',','.').'VNĐ';
-                                                        }elseif(!Session::get('fee') && Session::get('coupon')){
-                                                            $total_after = $total_after_coupon;
-                                                            echo number_format($total_after,0,',','.').'VNĐ';
-                                                        }elseif(Session::get('fee') && Session::get('coupon')){
-                                                            $total_after = $total_after_coupon;
-                                                            $total_after = $total_after + Session::get('fee');
-                                                            echo number_format($total_after,0,',','.').'VNĐ';
-                                                        }elseif(!Session::get('fee') && !Session::get('coupon')){
-                                                            $total_after = $total;
-                                                            echo number_format($total_after,0,',','.').'VNĐ';
-                                                        }
-
-                                                    @endphp
-                                                </li>
-
+                                                @php
+                                                    if(Session::get('fee') && !Session::get('coupon')){
+                                                        $total_after = $total_after_fee;
+                                                        /*echo number_format($total_after,0,',','.').'VNĐ';*/
+                                                    }elseif(!Session::get('fee') && Session::get('coupon')){
+                                                        $total_after = $total_after_coupon;
+                                                        /*echo number_format($total_after,0,',','.').'VNĐ';*/
+                                                    }elseif(Session::get('fee') && Session::get('coupon')){
+                                                        $total_after = $total_after_coupon;
+                                                        $total_after = $total_after + Session::get('fee');
+                                                        /*echo number_format($total_after,0,',','.').'VNĐ';*/
+                                                    }elseif(!Session::get('fee') && !Session::get('coupon')){
+                                                        $total_after = $total;
+                                                        /*echo number_format($total_after,0,',','.').'VNĐ';*/
+                                                    }
+                                                @endphp
                                                 <div class="col-md-12">
                                                     @php
-
                                                         $vnd_to_usd = $total_after/23083;
                                                         $total_pay = round($vnd_to_usd,2);
                                                         \Session::put('total_pay', $total_pay);
                                                     @endphp
-                                                    {{--  <div id="paypal-button"></div>--}}
-                                                    {{-- <input type="hidden" id="vnd_to_usd" value="{{round($vnd_to_usd,2)}}"> --}}{{--làm tròn 2 chữ số--}}
                                                 </div>
 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">&nbsp;</td>
+                                            <td colspan="2">
+                                                <table class="table table-condensed total-result">
+                                                    <tr>
+                                                        <td>Tổng tiền</td>
+                                                        <td>{{number_format($total,0,',','.')}} VNĐ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mã giảm giá</td>
+                                                        @if(Session::get('coupon'))
+                                                            {{--  <li>--}}
+                                                            @foreach(Session::get('coupon') as $key => $cou)
+                                                                @if($cou['coupon_condition']==1)
+                                                                    <td> {{$cou['coupon_number']}} % </td>
+                                                                    <p>
+                                                                        @php
+                                                                            $total_coupon = ($total*$cou['coupon_number'])/100;
+
+                                                                        @endphp
+                                                                    </p>
+                                                                    <p>
+                                                                        @php
+                                                                            $total_after_coupon = $total-$total_coupon;
+                                                                        @endphp
+                                                                    </p>
+                                                                @elseif($cou['coupon_condition']==2)
+
+                                                                    <td> {{number_format($cou['coupon_number'],0,',','.')}} VNĐ </td>
+                                                                    <p>
+                                                                        @php
+                                                                            $total_coupon = $total - $cou['coupon_number'];
+                                                                        @endphp
+                                                                    </p>
+                                                                    @php
+                                                                        $total_after_coupon = $total_coupon;
+                                                                    @endphp
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                        @if(!Session::get('coupon'))
+                                                            <td> Không có mã giảm giá </td>
+                                                            <p>
+                                                                @php
+                                                                    $total_coupon = $total;
+
+                                                                @endphp
+                                                            </p>
+                                                        @endif
+
+                                                    </tr>
+                                                    <tr class="shipping-cost">
+                                                        <td>Phí vận chuyển</td>
+                                                        <td>Miễn phí</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phải thanh toán</td>
+                                                        <td>
+                                                            <span> {{number_format($total_after,0,',','.').' VNĐ'}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </td>
                                         </tr>
                                     @else

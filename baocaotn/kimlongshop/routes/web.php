@@ -15,6 +15,10 @@ Route::get('/','HomeController@index' );
 Route::get('/trang-chu','HomeController@index');
 Route::get('/404','HomeController@error_page');
 Route::post('/tim-kiem','HomeController@search');
+Route::post('/timkiem','HomeController@timkiem');
+
+
+
 //contact
 Route::get('/lien-he','ContactController@lien_he');
 Route::get('/contact-admin','ContactController@contact_admin');
@@ -73,6 +77,9 @@ Route::post('/save-product','ProductController@save_product');
 Route::post('/update-product/{product_id}','ProductController@update_product');
 Route::post('/comment','ProductController@comment');
 Route::post('/insert-rate','ProductController@insert_rate');
+
+Route::post('/uploads-ckeditor','ProductController@ckeditor_image');
+/*Route::get('/file-browser','ProductController@file_browser');*/
 //Coupon
 Route::post('/check-coupon','CartController@check_coupon');
 Route::get('/unset-coupon','CouponController@unset_coupon');
@@ -80,6 +87,8 @@ Route::get('/insert-coupon','CouponController@insert_coupon');
 Route::get('/delete-coupon/{coupon_id}','CouponController@delete_coupon');
 Route::get('/list-coupon','CouponController@list_coupon');
 Route::post('/insert-coupon-code','CouponController@insert_coupon_code');
+Route::get('/edit-coupon/{coupon_id}','CouponController@edit_coupon');
+Route::post('/update-coupon/{coupon_id}','CouponController@update_coupon');
 //Cart
 Route::post('/update-cart-quantity','CartController@update_cart_quantity');
 Route::post('/update-cart','CartController@update_cart');
@@ -90,6 +99,10 @@ Route::get('/gio-hang','CartController@gio_hang');
 Route::get('/delete-to-cart/{rowId}','CartController@delete_to_cart');
 Route::get('/del-product/{session_id}','CartController@delete_product');
 Route::get('/del-all-product','CartController@delete_all_product');
+Route::get('/show-infor-cart','CartController@show_infor_cart');
+Route::get('/hover-infor-cart','CartController@hover_infor_cart');
+
+
 //Checkout
 Route::get('/dang-nhap','CheckoutController@login_checkout');
 Route::get('/del-fee','CheckoutController@del_fee');
@@ -147,6 +160,7 @@ Route::post('/update-picture','PictureController@update_picture');
 Route::get('/comment','CommentController@comment');
 Route::post('/comment-allow','CommentController@comment_allow');
 Route::post('/comment-reply','CommentController@comment_reply');
+Route::get('/delete-comment/{comment_id}','CommentController@delete_comment');
 //thống kê
 Route::post('/statistics-date','StatisticalController@statistics_date');
 Route::post('/filter-by-time','StatisticalController@filter_by_time');
@@ -166,10 +180,14 @@ Route::post('/login-staff','AdminController@login_staff');
 Route::get('/logout-staff','AdminController@logout_staff');
 
 Route::get('users','UserController@index')->middleware('roles');
-Route::get('add-users','UserController@add_users')->middleware('roles');
+Route::get('add-staff','UserController@add_staff')->middleware('roles');
 Route::get('delete-staff/{admin_id}','UserController@delete_staff')->middleware('roles');
-/*Route::post('add-staff','UserController@add_staff');*/
+Route::post('add-user','UserController@add_user')->middleware('roles');
 Route::post('staff-roles','UserController@staff_roles')->middleware('roles');
+Route::get('/forgot-password-staff','UserController@forgot_password_staff');
+Route::post('/address-email-staff','UserController@address_email_staff');/*nhập địa chỉ email để nhận mail khôi phục mật khẩu*/
+Route::get('/update-password-staff','UserController@update_password_staff');/*nhập mật khẩu mới*/
+Route::post('/password-new-staff','UserController@password_new_staff');/*cập nhật mật khẩu mới*/
 
 
 

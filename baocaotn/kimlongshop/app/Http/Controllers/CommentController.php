@@ -48,5 +48,11 @@ class CommentController extends Controller
         $comment->comment_comment_prarent = $data['comment_id']; /*trả lời đánh giá dựa trên comment_id*/
         $comment->save();
     }
+    public function delete_comment($comment_id){
+        $this->AuthLogin();
+        DB::table('tbl_comment')->where('comment_id',$comment_id)->delete();
+        Session::put('message','Xóa bình luận thành công');
+        return Redirect::to('comment');
+    }
 
 }

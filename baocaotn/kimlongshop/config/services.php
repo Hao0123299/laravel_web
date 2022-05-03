@@ -46,13 +46,14 @@ return [
     'facebook' => [
         'client_id' => '378345737058093',  //client face
         'client_secret' => '7aa0562075e486c8409a1419c08a1447',  //client app service face
-        'redirect' => 'https://kimlong.com/kimlongshop/facebook/callback' //callback trả về
+        'redirect' => 'https://kimlongmobile.ga/kimlongshop/dang-nhap/facebook/callback' //callback trả về
+
     ],
 
     'google' => [
         'client_id' => '235352946187-kd87gaqdvm2b0ut7a6tnq95iiv1odhoo.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'http://kimlong.com/kimlongshop/google/callback'
+        'redirect' => 'http://kimlongmobile.ga/kimlongshop/google/callback'
     ],
 
 

@@ -6,6 +6,7 @@ use App\CategoryProductModel;
 use Illuminate\Http\Request;
 use DB;
 use App\Slider;
+use App\Product;
 use App\Exports\ExcelExports;
 use App\Imports\ExcelImports;
 use Excel;
@@ -27,23 +28,15 @@ class CategoryProduct extends Controller
     }
     public function add_category_product(){
         $this->AuthLogin();
-        $category = CategoryProductModel::where('category_parent', NULL)
+        $category = CategoryProductModel::where('category_parent', 0)
             ->orderBy('category_id','DESC')
             ->get();
-        $cate_product = DB::table('tbl_category_product')
-            ->orderby('category_id','desc')
-            ->get();
-        $brand_product = DB::table('tbl_brand')
-            ->orderby('brand_id','desc')
-            ->get();
         return view('admin.add_category_product')
-            ->with('cate_product', $cate_product)
-            ->with('brand_product',$brand_product)
             ->with('category',$category);
     }
     public function all_category_product(){
         $this->AuthLogin();
-        $category = CategoryProductModel::where('category_parent', 0)
+        $category = CategoryProductModel::where('category_parent',0)
             ->orderBy('category_id','DESC')
             ->get();
         $cate_product = DB::table('tbl_category_product')
@@ -53,7 +46,7 @@ class CategoryProduct extends Controller
             ->orderby('brand_id','desc')
             ->get();
     	$all_category_product = DB::table('tbl_category_product')
-            ->paginate(6);
+            ->get()/*paginate(10)*/;
     	$manager_category_product  = view('admin.all_category_product')
             ->with('all_category_product',$all_category_product)
             ->with('category',$category);
@@ -153,10 +146,45 @@ class CategoryProduct extends Controller
             ->where('brand_status','0')
             ->orderby('brand_id','desc')
             ->get();
-        $category_by_id = DB::table('tbl_product')
+        $category_by_slug = CategoryProductModel::where('slug_category_product',$slug_category_product)->get();
+
+        foreach($category_by_slug as $key => $cate){
+            $category_id = $cate->category_id;
+        }
+
+        if(isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+
+            if($sort_by=='giam_dan'){
+
+                $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_price','DESC')
+                    ->paginate(6)->appends(request()->query());
+
+            }elseif($sort_by=='tang_dan'){
+
+                $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_price','ASC')
+                    ->paginate(6)->appends(request()->query());
+
+            }elseif($sort_by=='kytu_za'){
+
+                $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_name','DESC')
+                    ->paginate(6)->appends(request()->query());
+
+
+            }elseif($sort_by=='kytu_az'){
+
+                $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_name','ASC')
+                    ->paginate(6)->appends(request()->query());
+            }
+        }else{
+            $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_id','DESC')
+                ->paginate(6)->appends(request()->query());
+        }
+
+       /* $category_by_id = DB::table('tbl_product')
             ->join('tbl_category_product','tbl_product.category_id','=','tbl_category_product.category_id')
             ->where('tbl_category_product.slug_category_product',$slug_category_product)
-            ->paginate(6);
+            ->paginate(6);*/
         $category_name = DB::table('tbl_category_product')
             ->where('tbl_category_product.slug_category_product',$slug_category_product)
             ->limit(1)
@@ -212,6 +240,7 @@ class CategoryProduct extends Controller
         $data['meta_keywords'] = $request->category_product_keywords;
         $data['category_desc'] = $request->category_product_desc;
         $data['category_status'] = $request->category_product_status;
+        $data['category_parent'] = $request->category_parent;
 
         DB::table('tbl_category_product')->insert($data);
         Session::put('message','Thêm danh mục sản phẩm thành công');

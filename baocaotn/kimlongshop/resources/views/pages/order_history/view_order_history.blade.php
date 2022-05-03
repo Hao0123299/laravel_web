@@ -116,7 +116,7 @@
                 <table class="table table-striped b-t b-light">
                     <thead>
                     <tr>
-                        <th>Tên sản phẩm</th>
+                        {{--<th>Tên sản phẩm</th>--}}
                         <th>Tên sản phẩm</th>
                       {{--  <th>Số lượng kho</th>--}}
                         <th>Mã giảm giá</th>
@@ -142,7 +142,7 @@
                         @endphp
                         <tr class="color_qty_{{$details->product_id}}">
 
-                            <td><i>{{$i}}</i></td>
+                            {{--<td><i>{{$i}}</i></td>--}}
                             <td>{{$details->product_name}}</td>
                             {{--<td>{{$details->product->product_quantity}}</td>--}}
                             <td>@if($details->product_coupon!='no')

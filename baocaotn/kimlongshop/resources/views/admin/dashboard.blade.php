@@ -44,8 +44,8 @@
             <th scope="col">Đang truy cập</th>
             <th scope="col">Tổng lượng truy cập tháng trước</th>
             <th scope="col">Tổng lượng truy cập tháng này</th>
-            <th scope="col">Tổng lượng truy cập tháng trước</th>
-            <th scope="col">Tổng lượng truy cập tháng trước</th>
+            <th scope="col">Tổng lượng truy cập một năm</th>
+            <th scope="col">Tổng lượng truy cập</th>
         </tr>
         </thead>
         <tbody>

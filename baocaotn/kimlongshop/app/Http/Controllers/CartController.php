@@ -108,10 +108,8 @@ class CartController extends Controller
 
     }
     public function gio_hang(Request $request){
-
-
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(3)->get();
-        //Session::forget('cart');
+        /*Session::forget('cart');*/
         /*dd(Session::get('cart'));*/
         $meta_desc = "Giỏ hàng của bạn";
         $meta_keywords = "Giỏ hàng";
@@ -130,7 +128,7 @@ class CartController extends Controller
         ]);
     }
     public function add_cart_ajax(Request $request){
-        Session::forget('cart');
+        /*Session::forget('cart');*/
         $data = $request->all();
         $session_id = substr(md5(microtime()),rand(0,26),5);
         $cart = Session::get('cart');
@@ -259,6 +257,41 @@ class CartController extends Controller
         Cart::update($rowId,$qty);
         return Redirect::to('/show-cart');
     }
-//    loi o funciton nao
+    public function show_infor_cart()
+    {
+        $cart = count(Session::get('cart'));
+        echo $cart;
+    }
+    public function hover_infor_cart()
+    {
+        $cart = count(Session::get('cart'));
+        $output = '';
+        if($cart>0)
+        {
+            $output.='<ul class="hover-cart">';
+                foreach(Session::get('cart') as $c) {
+                    $output .= '<li>
+                     <a href="#">
+                        <img src="'.asset('public/uploads/product'.$c['product_image']).'">
+                            <p>Tên sản phẩm: '.$c['product_name'].'</p>
+                            <p>Số lương: '.$c['product_qty'].'</p>
+                            <p>Giá: '.number_format($c['product_price'],0,',','.').' VNĐ </p>
+                     </a>
+                     <a class="cart_quantity_delete" href="'.url('/del-product/'.$c['session_id']).'">
+                        <i class="fa fa-times"></i>
+                     </a>
+                    </li>';
+                }
+                     $output.='</ul>';
+        }
+        else{
+            $output.='<ul class="hover-cart">
+                <li>
+                    <p style="color: black">Không có sản phẩm trong giỏ hàng</p>
+                </li>
+                      </ul>';
+        }
+        echo $output;
+    }
 
 }

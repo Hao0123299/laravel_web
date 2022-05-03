@@ -14,8 +14,18 @@ class Product extends Model
     protected $primaryKey = 'product_id';
  	protected $table = 'tbl_product';
     /*1 sản phẩm có nhiều đánh giá*/
-    public function product($method, $parameters)
+    public function product()
     {
         return $this->hasMany('App\Comment');
+    }
+    public function category()
+    {
+        /*sản phẩm thuộc danh mục*/
+        return $this->belongsTo('App\CategoryProductModel','category_id');
+    }
+    public function brand()
+    {
+        /*sản phẩm thuộc danh mục*/
+        return $this->belongsTo('App\Brand','brand_id');
     }
 }

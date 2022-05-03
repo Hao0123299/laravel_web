@@ -64,13 +64,20 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Nội dung sản phẩm</label>
                                 <textarea style="resize: none" rows="8" class="form-control" name="product_content"
-                                          id="id4" placeholder="Nội dung sản phẩm"></textarea>
+                                          id="ckeditor4" placeholder="Nội dung sản phẩm"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Danh mục sản phẩm</label>
                                 <select name="product_cate" class="form-control input-sm m-bot15">
                                     @foreach($cate_product as $key => $cate)
-                                        <option value="{{$cate->category_id}}">{{$cate->category_name}}</option>
+                                        @if($cate->category_parent==0)
+                                        <option style="font-size: 14px" value="{{$cate->category_id}}">{{$cate->category_name}}</option>
+                                            @foreach($cate_product as $key => $cate_pro)
+                                                @if($cate_pro->category_parent!=0 && $cate_pro->category_parent==$cate->category_id)
+                                                    <option style="color:red" value="{{$cate_pro->category_id}}">{{$cate_pro->category_name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     @endforeach
 
                                 </select>
@@ -87,8 +94,8 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Hiển thị</label>
                                 <select name="product_status" class="form-control input-sm m-bot15">
-                                    <option value="0">Hiển thị</option>
-                                    <option value="1">Ẩn</option>
+                                    <option value="0">Ẩn</option>
+                                    <option value="1">Hiển thị</option>
 
                                 </select>
                             </div>

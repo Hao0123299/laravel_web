@@ -41,12 +41,10 @@
                            {{-- <div class="form-group">
                                 <label for="exampleInputPassword1">Phân cấp danh mục</label>
                                 <select name="category_parent" class="form-control input-sm m-bot15">
-                                    <option value="0">---Danh mục cha---</option>
                                     @foreach($category as $key => $val)
+                                        <option value="0">Danh mục cha</option>
                                         <option value="{{$val->category_id}}">{{$val->category_name}}</option>
                                     @endforeach
-
-
                                 </select>
                             </div>--}}
                             <div class="form-group">

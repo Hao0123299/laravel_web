@@ -18,6 +18,11 @@ clinet Id: AY6oXOhqROkIHqP5aC6gW0afet_yi0vjLpdppaDpjOsqTmOrmqzFlo4TvR-xzPb5vd1Ch
 secret:
 
 Demo!!!!!
+CKEDITOR.replace('ckeditor3',{
+            filebrowserImageUploadUrl : "{{ url('uploads-ckeditor?_token='.csrf_token()) }}",
+            filebrowserBrowseUrl : "{{ url('file-browser?_token='.csrf_token()) }}",
+            filebrowserUploadMethod : 'form'
+        });
 
 
 localStorage.setItem(key, value)
@@ -29,5 +34,27 @@ http://kimlong.com/kimlongshop/
 
 Tích hợp chat facebook: vào fanpage - Meta business - hộp thư - plugin chat - tên miền trang web - thiêt lập - tiêu chuẩn - copy mã bỏ vào web
 
+tên miền freenom: kimlongmobile.tk
+kimlongmobile.ga
+tài khoan: hao0123956@gmail.com
+password: hao0123456
+
+hostting byethost.com
+domain name + password: kimlongmobile
+Cpanel Username: b17_31386870
+Cpanel Password: kimlongmobile
+Your URL: http://kimlongmobile.byethost17.com or http://www.kimlongmobile.byethost17.com
+FTP Server : ftpupload.net
+FTP Login : b17_31386870
+FTP Password : kimlongmobile
+MySQL Database Name: MUST CREATE IN CPANEL
+MySQL Username : b17_31386870
+MySQL Password : kimlongmobile
+MySQL Server: SEE THE CPANEL
+
+
+.env FACEBOOK_REDIRECT=http://kimlong.com/kimlongshop/facebook/callback
+127.0.0.1 kimLong.com
+'redirect' => 'https://kimlong.com/kimlongshop/dang-nhap/facebook/callback'
 
 

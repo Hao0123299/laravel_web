@@ -155,14 +155,14 @@ class MailController extends Controller
     {
         $data = $request->all();
         $token_random = Str::random();
-        $customer = Customer::where('customer_email','=',$data['email'])->where('customer_reset_pass','=',$data['token'])->get();
-        $count = $customer->count();
+        $admin = Admin::where('admin_email','=',$data['email'])->where('admin_reset_password','=',$data['token'])->get();
+        $count = $admin->count();
         if($count>0){
-            foreach($customer as $key => $cus){
-                $customer_id = $cus->customer_id;
+            foreach($admin as $key => $ad){
+                $admin_id = $ad->admin_id;
             }
-            $reset = Customer::find($customer_id);
-            $reset->customer_password = md5($data['account_password']);
+            $reset = Admin::find($admin_id);
+            $reset->admin_password = md5($data['account_password']);
             $reset->customer_reset_pass = $token_random;
             $reset->save();
             return redirect('dang-nhap')->with('message', 'Mật khẩu đã cập nhật mới,vui lòng đăng nhập');

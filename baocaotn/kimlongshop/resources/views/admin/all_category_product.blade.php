@@ -13,10 +13,9 @@
                                 Session::put('message',null);
                             }
                             ?>
-      <table class="table table-striped">
+      <table class="table table-striped" id="myTable">
         <thead>
           <tr>
-
             <th>Tên danh mục</th>
             <th>Tiêu đề</th>
               <th>Phân cấp danh mục</th>
@@ -36,11 +35,11 @@
                   @if($cate_pro->category_parent==0)
                       <p style="color: #fcb216">Danh mục cha</p>
                   @else
-<!--                      //foreach tìm danh mục con-->
+
                        @foreach($category as $key => $cate_parent)
-                         {{--  //category_parent = 0 là cha nên phải khác không--}}
-                           @if($cate_parent->category_id==$cate_pro->category_parent )
-                          <p style="color: blue">Danh mục con của {{$cate_parent->category_name }}</p>
+
+                           @if($cate_parent->category_id==$cate_pro->category_parent)
+                                <p style="color: blue"> Danh mục con của {{$cate_parent->category_name}}</p>
                           @endif
                       @endforeach
 
@@ -90,11 +89,11 @@
 
 
     </div>
-    <footer class="panel-footer">
+    {{--<footer class="panel-footer">
       <div class="row">
 
         <div class="col-sm-5 text-center">
-          {{--<small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>--}}
+          --}}{{--<small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>--}}{{--
         </div>
         <div class="col-sm-7 text-right text-center-xs">
           <ul class="pagination pagination-sm m-t-none m-b-none">
@@ -102,7 +101,7 @@
           </ul>
         </div>
       </div>
-    </footer>
+    </footer>--}}
   </div>
 </div>
 @endsection

@@ -25,7 +25,6 @@ use App\Rules\Captcha;
 class AdminController extends Controller
 {
     public function AuthLogin(){
-        /*$admin_id = Session::get('admin_id');*/
         $admin_id = Auth::id();
         if($admin_id){
             return Redirect::to('dashboard');

@@ -11,12 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" type="image/x-icon" href=""/>
 
-{{--   <meta property="og:image" content="{{$image_og}}" />
-  <meta property="og:site_name" content="http://localhost/tutorial_youtube/shopbanhanglaravel" />
-  <meta property="og:description" content="{{$meta_desc}}" />
-  <meta property="og:title" content="{{$meta_title}}" />
-  <meta property="og:url" content="{{$url_canonical}}" />
-  <meta property="og:type" content="website" /> --}}
+
 <!--//-------Seo--------->
     <title>{{$meta_title}}</title>
     <link href="{{asset('public/frontend/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -72,61 +67,65 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-
                     <div class="logo pull-left">
                         <img style="width: 100%; height: 60px" src="{{asset('/public/frontend/images/logo.jpg')}}"
                              alt=""/>
                     </div>
-
                 </div>
                 <div class="col-md-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             <?php
-                            $customer_id = Session::get('customer_id');
-                            $shipping_id = Session::get('shipping_id');
-                            if($customer_id != NULL && $shipping_id == NULL){
+                                $customer_id = Session::get('customer_id');
+                                $shipping_id = Session::get('shipping_id');
+                                if($customer_id != NULL && $shipping_id == NULL){
                             ?>
-                            <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
-
+                                <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
                             <?php
-                            }elseif($customer_id != NULL && $shipping_id != NULL){
+                                }elseif($customer_id != NULL && $shipping_id != NULL){
                             ?>
-                            <li><a href="{{URL::to('/payment')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <li><a href="{{URL::to('/payment')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
                             <?php
                             }else{
                             ?>
-                            <li><a href="{{URL::to('/dang-nhap')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <li><a href="{{URL::to('/dang-nhap')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
                             <?php
                             }
                             ?>
-
-
-                            <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-
+                            <style type="text/css">
+                                span.show-cart li {
+                                    margin-top: 9px;
+                                }
+                            </style>
+                            <li class="hover-giohang">
+                                <a href="{{URL::to('/gio-hang')}}"><i class="fa fa-shopping-cart"></i>
+                                    Giỏ hàng
+                                    <span class="badges">
+                                        <span class="show-cart"></span>
+                                        <span class="giohang-hover"></span>
+                                    </span>
+                                </a>
+                            </li>
                             <?php
-                            $customer_id = Session::get('customer_id');
-                            if($customer_id != NULL){
+                                $customer_id = Session::get('customer_id');
+                                if($customer_id != NULL){
                             ?>
                             <li>
                                 <a href="{{URL::to('/order-history')}}"><i class="fa-solid fa-align-justify"></i> Lịch
                                     sử đơn hàng</a>
                             </li>
-
                             <?php
                             }
                             ?>
-
                             <?php
-                            $customer_id = Session::get('customer_id');
-                            if($customer_id != NULL){
+                                $customer_id = Session::get('customer_id');
+                                if($customer_id != NULL){
                             ?>
                             <li>
                                 <a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất</a>
                                 <img width="10%"
                                      src="{{Session::get('customer_picture')}}"> {{Session::get('customer_name')}}
                             </li>
-
                             <?php
                             }else{
                             ?>
@@ -134,7 +133,6 @@
                             <?php
                             }
                             ?>
-
                         </ul>
                     </div>
                 </div>
@@ -146,15 +144,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-7">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
+{{--                    <div class="navbar-header">--}}
+{{--                        <button type="button" class="navbar-toggle" data-toggle="collapse"--}}
+{{--                                data-target=".navbar-collapse">--}}
+{{--                            <span class="sr-only">Toggle navigation</span>--}}
+{{--                            <span class="icon-bar"></span>--}}
+{{--                            <span class="icon-bar"></span>--}}
+{{--                            <span class="icon-bar"></span>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="{{URL::to('/trang-chu')}}" class="active">Trang chủ</a></li>
@@ -173,10 +171,12 @@
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <form action="{{URL::to('/tim-kiem')}}" method="POST">
+                    <form action="{{URL::to('/tim-kiem')}}" autocomplete="off" method="POST">
                         {{csrf_field()}}
                         <div class="search_box pull-right">
-                            <input type="text" name="keywords_submit" placeholder="Tìm kiếm sản phẩm"/>
+                            <input style="width: 100%" type="text" name="keywords_submit" id="key"
+                                   placeholder="Tìm kiếm sản phẩm"/>
+                            <div id="search"></div> {{--trả dữ liệu--}}
                             <input type="submit" style="margin-top:0;color:#666" name="search_items"
                                    class="btn btn-primary btn-sm" value="Tìm kiếm">
                         </div>
@@ -192,14 +192,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#slider-carousel" data-slide-to="1"></li>
-                        <li data-target="#slider-carousel" data-slide-to="2"></li>
-                    </ol>
+{{--                    <ol class="carousel-indicators">--}}
+{{--                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>--}}
+{{--                        <li data-target="#slider-carousel" data-slide-to="1"></li>--}}
+{{--                        <li data-target="#slider-carousel" data-slide-to="2"></li>--}}
+{{--                    </ol>--}}
                     <style type="text/css">
                         img.img.img-responsive.img-slider {
-                            height: 350px;
+                            /* height: 300px;
+                             width: 100%*/
                         }
                     </style>
                     <div class="carousel-inner">
@@ -214,16 +215,13 @@
 
                                 <div class="col-sm-12">
                                     <img alt="{{$slide->slider_desc}}"
-                                         src="{{asset('public/uploads/slider/'.$slide->slider_image)}}" height="200"
-                                         width="100%" class="img img-responsive img-slider">
+                                         src="{{asset('public/uploads/slider/'.$slide->slider_image)}}"
+                                         class="img img-responsive img-slider">
 
                                 </div>
                             </div>
                         @endforeach
-
-
                     </div>
-
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                         <i class="fa fa-angle-left"></i>
                     </a>
@@ -245,9 +243,9 @@
                     <h2>Danh mục sản phẩm</h2>
                     {{--phân cấp danh mục khi có danh mục con--}}
                     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                        @foreach($category as $key => $cate)
+                        <div class="panel panel-default">
+                            @foreach($category as $key => $cate)
 
-                            <div class="panel panel-default">
                                 @if($cate->category_parent == 0)
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
@@ -256,9 +254,13 @@
                                                 <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                                 {{$cate->category_name}}
                                             </a>
+                                            {{--<a data-toggle="collapse" data-parent="#accordian"
+                                               href="#{{$cate->slug_category_product}}">
+                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                                {{$cate->category_name}}
+                                            </a>--}}
                                         </h4>
                                     </div>
-
                                     <div id="{{$cate->slug_category_product}}" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <ul>
@@ -273,9 +275,9 @@
                                         </div>
                                     </div>
                                 @endif
-                            </div>
 
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 {{--<div class="brands-name">
                     --}}{{--                            không phân câp danh mục--}}{{--
@@ -302,7 +304,6 @@
 
                     <div class="brands_products"><!--brands_products-->
                         <h2>Sản phẩm yêu thích</h2>
-
                         <div class="brands-name">
                             <div id="like_product" class="row"></div>
                         </div>
@@ -366,60 +367,6 @@
                         </ul>
                     </div>
                 </div>
-                {{--<div class="col-sm-4">
-                    <div class="single-widget">
-                        <style type="text/css">
-                            .nav nav-pills nav-stacked li{
-                                float: left;
-
-                            }
-                        </style>
-
-                        <h2>Website đối tác tác</h2>
-                        <ul class="nav nav-pills nav-stacked">
-                            <li>
-                                <a href="#">
-                                    <i class="">
-
-                                    </i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i>
-                                        dsdsd
-                                    </i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i>
-                                        dsdsd
-                                    </i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i>
-                                        dsdsd
-                                    </i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>--}}
-                {{--<div class="col-sm-3 col-sm-offset-1">
-                    <div class="single-widget">
-                        <h2>About Shopper</h2>
-                        <form action="#" class="searchform">
-                            <input type="text" placeholder="Your email address"/>
-                            <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i>
-                            </button>
-                            <p>Get the most recent updates from <br/>our site and be updated your self...</p>
-                        </form>
-                    </div>
-                </div>--}}
-
             </div>
         </div>
     </div>
@@ -452,37 +399,75 @@
 {{--chat facebook--}}
 <!-- Messenger Plugin chat Code -->
 <div id="fb-root"></div>
+
 <!-- Your Plugin chat code -->
 <div id="fb-customer-chat" class="fb-customerchat">
 </div>
+
 <script>
     var chatbox = document.getElementById('fb-customer-chat');
     chatbox.setAttribute("page_id", "102817114439300");
     chatbox.setAttribute("attribution", "biz_inbox");
 </script>
+
 <!-- Your SDK code -->
 <script>
-    window.fbAsyncInit = function () {
+    window.fbAsyncInit = function() {
         FB.init({
-            xfbml: true,
-            version: 'v13.0'
+            xfbml            : true,
+            version          : 'v13.0'
         });
     };
-    (function (d, s, id) {
+
+    (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
+        js = d.createElement(s); js.id = id;
         js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
 
-{{--<script src="https://www.google.com/recaptcha/api.js" async defer></script>--}}
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0&appId=2339123679735877&autoLogAppEvents=1"></script>
+{{--sắp xếp theo thứ tự--}}
+<script type="text/javascript">
+    $(document).ready(function(){
 
+        $('#sort').on('change',function(){
+
+            var url = $(this).val();
+            // alert(url);
+            if (url) {
+                window.location = url;
+            }
+            return false;
+        });
+
+    });
+</script>
+{{--auto Tìm kiếm --}}
+<script type="text/javascript">
+    $('#key').keyup(function () {
+        var query = $(this).val();
+        if (query != '') {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{url('/timkiem')}}",
+                method: "POST",
+                data: {query: query, _token: _token},
+                success: function (data) {
+                    $('#search').fadeIn(); /*hiển thị từ khóa liên quan*/
+                    $('#search').html(data);/*trả dữ liệu về*/
+                }
+            });
+        } else {
+            $('#search').fadeOut();
+        }
+    });
+    $(document).on('click', '.search', function () {
+        $('#key').val($(this).text());
+        $('#search').fadeOut();
+    });
+</script>
 {{--So sanh sản phẩm--}}
 <script type="text/javascript">
     function delete_compare(id) {
@@ -605,7 +590,7 @@
             currentPagerPosition: 'left',
             onSliderLoad: function (el) {
                 el.lightGallery({
-                    selector: '#imageGallery .lslide'
+                    selector: '#imageGallery.lslide'
                 });
             }
         });
@@ -780,6 +765,27 @@
 {{--Thêm sản phẩm vào giỏ hàng--}}
 <script type="text/javascript">
     $(document).ready(function () {
+        show_infor_cart();
+        hover_infor_cart();
+        function hover_infor_cart() {
+            $.ajax({
+                url: '{{url('/hover-infor-cart')}}',
+                method: 'GET',
+                success: function (data) {
+                    $('.giohang-hover').html(data);
+                }
+            });
+        }
+        //thông tin giỏ hàng
+        function show_infor_cart() {
+            $.ajax({
+                url: '{{url('/show-infor-cart')}}',
+                method: 'GET',
+                success: function (data) {
+                    $('.show-cart').html(data);
+                }
+            });
+        }
         $('.add-to-cart').click(function () {
 
             var id = $(this).data('id_product');
@@ -820,6 +826,9 @@
                             function () {
                                 window.location.href = "{{url('/gio-hang')}}";
                             });
+                        show_infor_cart();
+                        hover_infor_cart();
+
 
                     }
 
@@ -977,7 +986,5 @@
         localStorage.setItem('data', JSON.stringify(old_data));
     }
 </script>
-
-
 </body>
 </html>

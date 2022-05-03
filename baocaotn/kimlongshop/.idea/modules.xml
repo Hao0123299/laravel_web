@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../baigiang/.idea/baigiang.iml" filepath="$PROJECT_DIR$/../../baigiang/.idea/baigiang.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/kimlongshop.iml" filepath="$PROJECT_DIR$/.idea/kimlongshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../laragon/laragon/www/laravel_web_laragon/web/.idea/web.iml" filepath="$PROJECT_DIR$/../../../../laragon/laragon/www/laravel_web_laragon/web/.idea/web.iml" />
     </modules>
   </component>
 </project>

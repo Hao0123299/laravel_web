@@ -38,22 +38,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li>{{$val}}</li>
                 </ul>
             @endforeach
-            <input type="text"  class="ggg" name="admin_email" value="{{old("admin_email")}}" placeholder="Điền email đẻ đăng nhập" >
-            <input type="password" class="ggg" name="admin_password" value="{{old("admin_password")}}" placeholder="Điền password để đăng nhập" >
+            <input type="text"  class="ggg" name="admin_email" value="{{old("admin_email")}}" placeholder="Điền email" >
+            <input type="password" class="ggg" name="admin_password" value="{{old("admin_password")}}" placeholder="Điền password" >
             <div class="clearfix"></div>
             <input type="submit" value="Đăng nhập" name="login">
 
-            {{-- <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+            {{--<div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
             <br/>
             @if($errors->has('g-recaptcha-response'))
             <span class="invalid-feedback" style="display:block">
                 <strong>{{$errors->first('g-recaptcha-response')}}</strong>
             </span>
-            @endif --}}
+            @endif--}}
 
         </form>
         <a href="{{url('/register-account-staff')}}">Đăng ký</a> |
-        <a href="{{url('/login-account-staff')}}">Đăng nhập</a>
+        <a href="{{url('/login-account-staff')}}">Đăng nhập</a> |
+        <a href="{{url('/forgot-password-staff')}}">Quên mật khẩu</a>
         {{--<a href="{{url('/login-google')}}">Đăng nhập</a>--}}
         {{-- <p>Don't Have an Account ?<a href="registration.html">Create an account</a></p> --}}
     </div>

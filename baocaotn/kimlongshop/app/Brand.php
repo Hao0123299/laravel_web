@@ -12,5 +12,9 @@ class Brand extends Model
     ];
     protected $primaryKey = 'brand_id';
  	protected $table = 'tbl_brand';
-
+    public function product()
+    {
+        /*1danh mục có nhiều sản phẩm*/
+        return $this->hasMany('App\Product');
+    }
 }

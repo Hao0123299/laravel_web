@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\CategoryProductModel;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use DB;
@@ -28,7 +30,7 @@ class BrandProduct extends Controller
     }
     public function all_brand_product(){
         $this->AuthLogin();
-    	$all_brand_product = DB::table('tbl_brand')->orderby('brand_id','desc')->paginate(10); //static huong doi tuong
+    	$all_brand_product = DB::table('tbl_brand')->orderby('brand_id','desc')->get()/*paginate(10)*/; //static huong doi tuong
         // $all_brand_product = Brand::all();
        /* $all_brand_product = Brand::orderBy('brand_id','DESC')->panigate(10);*/
     	$manager_brand_product  = view('admin.all_brand_product')->with('all_brand_product',$all_brand_product);
@@ -113,9 +115,38 @@ class BrandProduct extends Controller
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get();
 
 
-        $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')->where('tbl_brand.brand_slug',$brand_slug)->paginate(6);
+       /* $brand_by_id = DB::table('tbl_product')->join('tbl_brand','tbl_product.brand_id','=','tbl_brand.brand_id')->where('tbl_brand.brand_slug',$brand_slug)->paginate(6);*/
 
         $brand_name = DB::table('tbl_brand')->where('tbl_brand.brand_slug',$brand_slug)->limit(1)->get();
+         $brand_slug = Brand::where('brand_slug',$brand_slug)->get();
+         foreach($brand_slug as $key => $brand){
+             $brand_id = $brand->brand_id;
+         }
+
+         if(isset($_GET['sort_by'])) {
+             $sort_by = $_GET['sort_by'];
+
+             if($sort_by=='giam_dan'){
+
+                 $brand_by_id = Product::with('brand')->where('brand_id',$brand_id)->orderBy('product_price','DESC')->paginate(6)->appends(request()->query());
+
+             }elseif($sort_by=='tang_dan'){
+
+                 $brand_by_id = Product::with('brand')->where('brand_id',$brand_id)->orderBy('product_price','ASC')->paginate(6)->appends(request()->query());
+
+             }elseif($sort_by=='kytu_za'){
+
+                 $brand_by_id= Product::with('brand')->where('brand_id',$brand_id)->orderBy('product_name','DESC')->paginate(6)->appends(request()->query());
+
+
+             }elseif($sort_by=='kytu_az'){
+
+                 $brand_by_id= Product::with('brand')->where('brand_id',$brand_id)->orderBy('product_name','ASC')->paginate(6)->appends(request()->query());
+             }
+         }
+         else{
+             $brand_by_id = Product::with('brand')->where('brand_id',$brand_id)->orderBy('product_id','DESC')->paginate(6)->appends(request()->query());
+         }
 
         foreach($brand_name as $key => $val){
             //seo

@@ -87,7 +87,6 @@
 	                          	<a class="btn btn-default check_out" href="{{url('/unset-coupon')}}">Xóa mã khuyến mãi</a>
 								@endif
 							</td>
-
 							<td>
 								@if(Session::get('customer_id'))
 	                          	<a class="btn btn-default check_out" href="{{url('/checkout')}}">Đặt hàng</a>
@@ -95,16 +94,14 @@
 	                          	<a class="btn btn-default check_out" href="{{url('/dang-nhap')}}">Đặt hàng</a>
 								@endif
 							</td>
-
-
 							<td colspan="2">
-							<li>Tổng tiền :<span>{{number_format($total,0,',','.')}} VNĐ</span></li>
-							@if(Session::get('coupon'))
-							<li>
+							{{--<li>Tổng tiền :<span>{{number_format($total,0,',','.')}} VNĐ</span></li>--}}
+							{{--@if(Session::get('coupon'))
+							--}}{{--<li>--}}{{--
 
 									@foreach(Session::get('coupon') as $key => $cou)
 										@if($cou['coupon_condition']==1)
-											Mã giảm : {{$cou['coupon_number']}} %
+											--}}{{--Mã giảm : {{$cou['coupon_number']}} %--}}{{--
 											<p>
 												@php
 												$total_coupon = ($total*$cou['coupon_number'])/100;
@@ -113,7 +110,7 @@
 											</p>
 											<p><li>Tổng đã giảm :{{number_format($total-$total_coupon,0,',','.')}} VNĐ</li></p>
 										@elseif($cou['coupon_condition']==2)
-											Mã giảm : {{number_format($cou['coupon_number'],0,',','.')}} VNĐ
+											--}}{{--Mã giảm : {{number_format($cou['coupon_number'],0,',','.')}} VNĐ--}}{{--
 											<p>
 												@php
 												$total_coupon = $total - $cou['coupon_number'];
@@ -126,11 +123,64 @@
 
 
 
-							</li>
-							@endif
+							--}}{{--</li>--}}{{--
+							@endif--}}
 
 						</td>
 						</tr>
+                        <tr>
+                            <td colspan="4">&nbsp;</td>
+                            <td colspan="2">
+                                <table class="table table-condensed total-result">
+                                    <tr>
+                                        <td>Tổng tiền</td>
+                                        <td>{{number_format($total,0,',','.')}} VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mã giảm giá</td>
+                                        @if(Session::get('coupon'))
+                                            @foreach(Session::get('coupon') as $key => $cou)
+                                                @if($cou['coupon_condition']==1)
+                                                    <td> {{$cou['coupon_number']}} </td>
+                                                    <p>
+                                                        @php
+                                                            $total_coupon = ($total*$cou['coupon_number'])/100;
+                                                            echo '<p><li>Tổng giảm:'.number_format($total_coupon,0,',','.').' VNĐ</li></p>';
+                                                        @endphp
+                                                    </p>
+                                                    {{--<p><li>Tổng đã giảm :{{number_format($total-$total_coupon,0,',','.')}} VNĐ</li></p>--}}
+                                                @elseif($cou['coupon_condition']==2)
+                                                    <td> {{number_format($cou['coupon_number'],0,',','.')}} VNĐ </td>
+                                                    <p>
+                                                        @php
+                                                            $total_coupon = $total - $cou['coupon_number'];
+                                                        @endphp
+                                                    </p>
+                                                    {{--<p><li>Tổng đã giảm :{{number_format($total_coupon,0,',','.')}} VNĐ</li></p>--}}
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                        @if(!Session::get('coupon'))
+                                            <td> Không có mã giảm giá </td>
+                                            <p>
+                                                @php
+                                                    $total_coupon = $total;
+
+                                                @endphp
+                                            </p>
+                                        @endif
+                                    </tr>
+                                    <tr class="shipping-cost">
+                                        <td>Phí vận chuyển</td>
+                                        <td>Miễn phí</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tổng tiền phải thah toán</td>
+                                        <td><span>{{number_format($total_coupon,0,',','.')}} VNĐ</span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
 						@else
 						<tr>
 							<td colspan="5"><center>

@@ -66,10 +66,15 @@
 							<div class="tab-pane fade active in" id="details" >
 								<p>{!!$value->product_desc!!}</p>
 							</div>
-
-							<div class="tab-pane fade" id="companyprofile" >
+							{{--<div class="tab-pane fade" id="companyprofile" >
 								<p>{!!$value->product_content!!}</p>
-							</div>
+							</div>--}}
+                            <div class="tab-pane fade" id="companyprofile" >
+                                <div class="collapse" id="noi-dung">
+                                    <p>{!!$value->product_content!!}</p>
+                                </div>
+                                <a class="btn btn-outline-info" data-toggle="collapse" data-target="#noi-dung">Xem thêm </a>
+                            </div>
 
 							<div class="tab-pane fade" id="reviews" >
 								<div class="col-sm-12">
@@ -87,18 +92,17 @@
                                                     }
                                             @endphp
                                             <li title="Vote sao"
-                                                id="{{$value->product_id}} - {{$sao}}"
+                                                id="{{$value->product_id}}-{{$sao}}"
                                                 data-index="{{$sao}}" {{--số sao--}}
                                                 data-product_id="{{$value->product_id}}"
                                                 data-rating="{{$rate}}" {{--số sao trung bình--}}
                                                 class="rate"
-                                                style="cursor: pointer;
+                                                style=" cursor: pointer;
                                                 {{$color}} font-size: 30px;">&#9733;
                                             </li>
                                         @endfor
                                     </uL>
 									<p><b>Đánh giá sản phẩm</b></p>
-
 									<form action="#">
 										<span>
 											<input class="comment_name" style="margin-left: 0; width: 100%" type="text" placeholder="Họ và tên của bạn"/>
@@ -122,7 +126,18 @@
                                     <form>
                                         @csrf
                                         <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$value->product_id}}">
+
                                         <div id="show_comment"></div>
+                                       {{-- <div class="tab-pane fade" id="companyprofile" >
+                                            <div class="collapse" id="noi-dung">
+                                                <p>{!!$value->product_content!!}</p>
+                                            </div>
+                                            <a class="btn btn-outline-info" data-toggle="collapse" data-target="#noi-dung">>Xem thêm </a>
+                                        </div>--}}
+                                        {{--<div class="tab-pane fade" id="companyprofile" >
+                                            <div id="show_comment"></div>
+                                            <a class="btn btn-outline-info" data-toggle="collapse" data-target="#noi-dung">Xem thêm </a>
+                                        </div>--}}
                                     </form>
 
 								</div>

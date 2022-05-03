@@ -13,7 +13,7 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
     overflow-x: hidden;
-    background-color: #00ff00;
+    background-color: #C0C0C0;
 	background-size:cover;
 
 }
@@ -56,7 +56,7 @@ span.fa-thumb-styling.fa.fa-thumbs-down {
 }
 span.fa-thumb-styling.fa.fa-thumbs-up {
     font-size: 28px;
-    color: green;
+    color: #C0C0C0;
 }
 a.active.styling-edit {
     font-size: 20px;

@@ -461,7 +461,6 @@ class CheckoutController extends Controller
     public function callback_facebook()
     {
         $provider = Socialite::driver('facebook')->user();/*chưa thông tin của tài khoản login*/
-
         $facebook = Social::where('provider', 'FACEBOOK')->where('provider_user_id', $provider->getId())->first(
         );/* provider_user_id == user*/
 

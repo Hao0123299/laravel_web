@@ -43,13 +43,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng nhập" name="login">
 
-			{{-- <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
-			<br/>
-			@if($errors->has('g-recaptcha-response'))
-			<span class="invalid-feedback" style="display:block">
-				<strong>{{$errors->first('g-recaptcha-response')}}</strong>
-			</span>
-			@endif --}}
+
 
 		</form>
 
